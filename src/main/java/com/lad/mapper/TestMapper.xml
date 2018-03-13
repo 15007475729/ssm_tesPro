@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lad.dao.TestMapper" >
+  <resultMap id="BaseResultMap" type="com.lad.entity.Test" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="usn" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ttype" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="tcon" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tgrade" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="tsub" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, usn, ttype, tcon, tgrade, tsub
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from test
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from test
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lad.entity.Test" >
+    insert into test (id, usn, ttype, 
+      tcon, tgrade, tsub)
+    values (#{id,jdbcType=INTEGER}, #{usn,jdbcType=VARCHAR}, #{ttype,jdbcType=INTEGER}, 
+      #{tcon,jdbcType=VARCHAR}, #{tgrade,jdbcType=INTEGER}, #{tsub,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lad.entity.Test" >
+    insert into test
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="usn != null" >
+        usn,
+      </if>
+      <if test="ttype != null" >
+        ttype,
+      </if>
+      <if test="tcon != null" >
+        tcon,
+      </if>
+      <if test="tgrade != null" >
+        tgrade,
+      </if>
+      <if test="tsub != null" >
+        tsub,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="usn != null" >
+        #{usn,jdbcType=VARCHAR},
+      </if>
+      <if test="ttype != null" >
+        #{ttype,jdbcType=INTEGER},
+      </if>
+      <if test="tcon != null" >
+        #{tcon,jdbcType=VARCHAR},
+      </if>
+      <if test="tgrade != null" >
+        #{tgrade,jdbcType=INTEGER},
+      </if>
+      <if test="tsub != null" >
+        #{tsub,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lad.entity.Test" >
+    update test
+    <set >
+      <if test="usn != null" >
+        usn = #{usn,jdbcType=VARCHAR},
+      </if>
+      <if test="ttype != null" >
+        ttype = #{ttype,jdbcType=INTEGER},
+      </if>
+      <if test="tcon != null" >
+        tcon = #{tcon,jdbcType=VARCHAR},
+      </if>
+      <if test="tgrade != null" >
+        tgrade = #{tgrade,jdbcType=INTEGER},
+      </if>
+      <if test="tsub != null" >
+        tsub = #{tsub,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lad.entity.Test" >
+    update test
+    set usn = #{usn,jdbcType=VARCHAR},
+      ttype = #{ttype,jdbcType=INTEGER},
+      tcon = #{tcon,jdbcType=VARCHAR},
+      tgrade = #{tgrade,jdbcType=INTEGER},
+      tsub = #{tsub,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lad.dao.SubjectMapper" >
+  <resultMap id="BaseResultMap" type="com.lad.entity.Subject" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ssx" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sdesc" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, ssx, sname, sdesc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from subject
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from subject
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lad.entity.Subject" >
+    insert into subject (id, ssx, sname, 
+      sdesc)
+    values (#{id,jdbcType=INTEGER}, #{ssx,jdbcType=VARCHAR}, #{sname,jdbcType=VARCHAR}, 
+      #{sdesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lad.entity.Subject" >
+    insert into subject
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ssx != null" >
+        ssx,
+      </if>
+      <if test="sname != null" >
+        sname,
+      </if>
+      <if test="sdesc != null" >
+        sdesc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="ssx != null" >
+        #{ssx,jdbcType=VARCHAR},
+      </if>
+      <if test="sname != null" >
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="sdesc != null" >
+        #{sdesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lad.entity.Subject" >
+    update subject
+    <set >
+      <if test="ssx != null" >
+        ssx = #{ssx,jdbcType=VARCHAR},
+      </if>
+      <if test="sname != null" >
+        sname = #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="sdesc != null" >
+        sdesc = #{sdesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lad.entity.Subject" >
+    update subject
+    set ssx = #{ssx,jdbcType=VARCHAR},
+      sname = #{sname,jdbcType=VARCHAR},
+      sdesc = #{sdesc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

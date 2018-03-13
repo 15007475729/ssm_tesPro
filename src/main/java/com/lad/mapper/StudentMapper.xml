@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lad.dao.StudentMapper">
+    <resultMap id="BaseResultMap" type="com.lad.entity.Student">
+        <constructor>
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="sname" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="cid" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="ssex" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="gid" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="stel" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, sname, cid, ssex, gid, stel, state
+  </sql>
+
+    <select id="queryAll" resultType="com.lad.entity.Student" parameterType="com.lad.entity.Fuzzy">
+        select * from student
+        <if test="val !=null and val != ''">
+            where ${term} like '%${val}%'
+        </if>
+        LIMIT ${page},${count}
+
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from student
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="getMaxGid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select MAX(gid) as gid from student where cid = #{cid}
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(*) FROM  student
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from student
+        where id = #{id,jdbcType=INTEGER}
+      </delete>
+
+    <insert id="insert" parameterType="com.lad.entity.Student">
+    insert into student (id, sname, cid, 
+      ssex, gid, stel, state
+      )
+    values (#{id,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR}, #{cid,jdbcType=INTEGER}, 
+      #{ssex,jdbcType=VARCHAR}, #{gid,jdbcType=VARCHAR}, #{stel,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.lad.entity.Student">
+        insert into student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="sname != null">
+                sname,
+            </if>
+            <if test="cid != null">
+                cid,
+            </if>
+            <if test="ssex != null">
+                ssex,
+            </if>
+            <if test="gid != null">
+                gid,
+            </if>
+            <if test="stel != null">
+                stel,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="sname != null">
+                #{sname,jdbcType=VARCHAR},
+            </if>
+            <if test="cid != null">
+                #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="ssex != null">
+                #{ssex,jdbcType=VARCHAR},
+            </if>
+            <if test="gid != null">
+                #{gid,jdbcType=VARCHAR},
+            </if>
+            <if test="stel != null">
+                #{stel,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.lad.entity.Student">
+        update student
+        <set>
+            <if test="sname != null">
+                sname = #{sname,jdbcType=VARCHAR},
+            </if>
+            <if test="cid != null">
+                cid = #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="ssex != null">
+                ssex = #{ssex,jdbcType=VARCHAR},
+            </if>
+            <if test="gid != null">
+                gid = #{gid,jdbcType=VARCHAR},
+            </if>
+            <if test="stel != null">
+                stel = #{stel,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.lad.entity.Student">
+    update student
+    set sname = #{sname,jdbcType=VARCHAR},
+      cid = #{cid,jdbcType=INTEGER},
+      ssex = #{ssex,jdbcType=VARCHAR},
+      gid = #{gid,jdbcType=VARCHAR},
+      stel = #{stel,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

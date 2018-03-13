@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lad.dao.ClassesMapper" >
+  <resultMap id="BaseResultMap" type="com.lad.entity.Classes" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="csn" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="cname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="cdesc" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, csn, cname, cdesc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from classes
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="querydisClazz" resultType="com.lad.entity.Classes">
+      select distinct csn from classes
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from classes
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lad.entity.Classes" >
+    insert into classes (id, csn, cname, 
+      cdesc)
+    values (#{id,jdbcType=INTEGER}, #{csn,jdbcType=VARCHAR}, #{cname,jdbcType=VARCHAR}, 
+      #{cdesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lad.entity.Classes" >
+    insert into classes
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="csn != null" >
+        csn,
+      </if>
+      <if test="cname != null" >
+        cname,
+      </if>
+      <if test="cdesc != null" >
+        cdesc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="csn != null" >
+        #{csn,jdbcType=VARCHAR},
+      </if>
+      <if test="cname != null" >
+        #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="cdesc != null" >
+        #{cdesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lad.entity.Classes" >
+    update classes
+    <set >
+      <if test="csn != null" >
+        csn = #{csn,jdbcType=VARCHAR},
+      </if>
+      <if test="cname != null" >
+        cname = #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="cdesc != null" >
+        cdesc = #{cdesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lad.entity.Classes" >
+    update classes
+    set csn = #{csn,jdbcType=VARCHAR},
+      cname = #{cname,jdbcType=VARCHAR},
+      cdesc = #{cdesc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

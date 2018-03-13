@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lad.dao.StudentanwerMapper" >
+  <resultMap id="BaseResultMap" type="com.lad.entity.Studentanwer" >
+    <constructor >
+      <arg column="sid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="tid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="sacontent" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="usn" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.lad.entity.Studentanwer" >
+    insert into studentanwer (sid, tid, sacontent, 
+      usn)
+    values (#{sid,jdbcType=INTEGER}, #{tid,jdbcType=INTEGER}, #{sacontent,jdbcType=VARCHAR}, 
+      #{usn,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lad.entity.Studentanwer" >
+    insert into studentanwer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="tid != null" >
+        tid,
+      </if>
+      <if test="sacontent != null" >
+        sacontent,
+      </if>
+      <if test="usn != null" >
+        usn,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="tid != null" >
+        #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="sacontent != null" >
+        #{sacontent,jdbcType=VARCHAR},
+      </if>
+      <if test="usn != null" >
+        #{usn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
